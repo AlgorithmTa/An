@@ -6,35 +6,34 @@ import java.io.InputStreamReader;
 
 public class Main1003 {
 
-    static int countZero;
-    static int countOne;
+    static Integer[][] arrayFibo = new Integer[41][2];
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine());
 
-        for(int i = 0; i < T; i++){
-            countZero = 0;
-            countOne = 0;
-            checkFibo(Integer.parseInt(br.readLine()));
+        //호출횟수 ( 0일때 0호출 횟수 )
+        arrayFibo[0][0] = 1;
+        arrayFibo[0][1] = 0;
+        arrayFibo[1][0] = 0;
+        arrayFibo[1][1] = 1;
 
-            System.out.println(countZero + " " + countOne);
+        for(int i = 0; i < T; i++){
+            int N = Integer.parseInt(br.readLine());
+            checkFibo(N);
+            System.out.println(arrayFibo[N][0] + " " + arrayFibo[N][1]);
         }
 
     }
 
-    public static int checkFibo(int n){
-        if (n == 0) {
-            countZero++;
-            return 0;
+    public static Integer[] checkFibo(int n){
+
+        if(arrayFibo[n][0] == null || arrayFibo[n][1] == null){
+            arrayFibo[n][0] = checkFibo(n-1)[0] + checkFibo(n-2)[0];
+            arrayFibo[n][1] = checkFibo(n-1)[1] + checkFibo(n-2)[1];
         }
-        else if (n == 1) {
-            countOne++;
-            return 1;
-        }
-        else {
-            return checkFibo(n-1) + checkFibo(n-2);
-        }
+
+        return arrayFibo[n];
     }
 
 }
