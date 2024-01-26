@@ -3,56 +3,64 @@ package week3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Main12891 {
+
+
+    static int S;
+    static int P;
+    static String DNA;
+    static int count;
+    static char[] ACGT = {'A', 'C', 'G', 'T'};
+    static HashMap<Character, int[]> map = new HashMap<Character, int[]>();
+
+
     public static void main(String[] args) throws IOException {
 
-        int[] checkArr = new int[4];
-        int[] coppyArr = new int[4];
-        int count = 0;
-        int start = 0;
+        count = 0;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int S = Integer.parseInt(st.nextToken()); // 총 문자열 길이
-        int P = Integer.parseInt(st.nextToken()); // 부분 문자열 길이
-        String DNA = br.readLine(); // DNA STRING
+        S = Integer.parseInt(st.nextToken()); // 총 문자열 길이
+        P = Integer.parseInt(st.nextToken()); // 부분 문자열 길이
+        DNA = br.readLine(); // DNA STRING
 
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < 4; i++){
-            checkArr[i] = Integer.parseInt(st.nextToken()); // 2 0 1 1 과 같은 string
+
+        //(1) map 에 A C G T 를 key 로 {현재 카운트, 입력 받은 조건 개수} 넣기
+        //    map에는 A : {0,2} 이런식으로 저장되어 있을 것이다.
+        for(char c : ACGT){
+            map.put(c, new int[]{0, Integer.parseInt(st.nextToken())});
         }
 
-        for(int j = 0; j < S-P+1; j++){
-            coppyArr = checkArr;
+        //(2) 세는 부분
+        //    입력 받은 DNA 문자열에서 첫 문자 포함하여 P만큼 자른 후 ACGT에 해당하는 문자 세기 --> 조건 만족하는지 체크
+        for(int i = 0; i < P; i++){
+            map.get(DNA.charAt(i))[0]++; //현재 카운트 개수에 값을 더한다.
+        }
+        if(isFull()) count++;
 
-            for(int k = start; k < start+4; k++){
-                switch (DNA.charAt(start)) {
-                    case 'A' :
-                        coppyArr[0]--;
-                        break;
-                    case 'C' :
-                        coppyArr[1]--;
-                        break;
-                    case 'T' :
-                        coppyArr[2]--;
-                        break;
-                    case 'G' :
-                        coppyArr[3]--;
-                        break;
-                }
-            }
-            start++;
-
-            if(coppyArr[0] <= 0 && coppyArr[1] <= 0 && coppyArr[2] <= 0 && coppyArr[3] <= 0){
-                count++;
-            }
+        //(3) 슬라이딩 인덱스?
+        //    인덱스를 1씩 증가시켜가며 슬라이딩 윈도우 적용(오른쪽으로 인덱스 하나씩 이동하여 부분문자열 만듦)
+        for (int i = 0; i < S - P; i++) {
+            map.get(DNA.charAt(i))[0] -= 1;
+            map.get(DNA.charAt(i+P))[0] += 1;
+            if (isFull()) count++;
         }
 
-        if(count == 0) System.out.println(0);
-        else System.out.println(count);
+        System.out.println(count);
 
     }
+
+    public static boolean isFull(){
+        for(char c : ACGT){
+            if (map.get(c)[0] < map.get(c)[1]) return false;
+        }
+        return true;
+    }
+
+
 }
