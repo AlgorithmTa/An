@@ -1,5 +1,6 @@
 ./out
 .DS_STORE
+./.idea
 
 ### Java ###
 # Compiled class file
