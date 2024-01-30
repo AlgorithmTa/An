@@ -10,7 +10,7 @@ public class Main1904 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
-        int[] tiles = new int[N+1];
+        int[] tiles = new int[N+2];
         tiles[0] = 0;
         tiles[1] = 1;
         tiles[2] = 2;
