@@ -33,6 +33,8 @@ public class Main2665 {
                 else map[i][j] = 0;
             }
         }
+
+        //자꾸 2가 나와야하는데 14가 나온다... 코드 다시 봐야함....
         bfs(0,0);
 
         System.out.println(visited[n-1][n-1]);
@@ -46,6 +48,7 @@ public class Main2665 {
         visited[x][y] = 0;
 
         //엠티 아니라면
+        // 코드 다시 보기
         while (!q.isEmpty()){
             int[] step = q.poll();
             int x1 = step[0];
