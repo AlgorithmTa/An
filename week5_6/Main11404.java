@@ -9,7 +9,7 @@ public class Main11404 {
 
     static int[][] graph;
     static int n;
-    final static int max = 100001;
+    static final int max = 999999999;
 
     public static void main(String[] args) throws IOException {
 
@@ -18,11 +18,11 @@ public class Main11404 {
 
         n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
+        graph = new int[n+2][n+2];
 
-        graph = new int[m + 1][m + 1];
-
-        for (int i = 0; i < m + 1; i++) {
-            for (int j = 0; j < m + 1; j++) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if(i==j) continue;
                 graph[i][j] = max;
             }
         }
@@ -33,11 +33,13 @@ public class Main11404 {
             int b = Integer.parseInt(st.nextToken());
             int value = Integer.parseInt(st.nextToken());
 
-            graph[a][b] = value;
+            //같은 노선에 여러 가지가 올 수 있음 아래 부분에서 틀린것 같음
+            //graph[a][b] = value;
+            graph[a][b] = Math.min(value, graph[a][b]);
         }
 
+
         floyd();
-        print();
     }
 
     private static void floyd() {
@@ -48,12 +50,10 @@ public class Main11404 {
                 }
             }
         }
-    }
 
-    private static void print(){
         for(int i = 1; i <=n; i++){
             for(int j = 1; j <=n; j++){
-                if(graph[i][j] == max || i == j) System.out.print(0 + " ");
+                if(graph[i][j] == max) System.out.print(0 + " ");
                 else System.out.print(graph[i][j] + " ");
             }
             System.out.println();
