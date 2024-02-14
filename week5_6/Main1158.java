@@ -16,31 +16,22 @@ public class Main1158 {
         int K = Integer.parseInt(st.nextToken());
 
         Queue<Integer> queue = new LinkedList<>();
-        int item = 0;
-
-        for(int i = 0; i < N; i++){ //반복문 7번
-            if( K+i > N ){
-                queue.add(K+i-N);
-            } else {
-                queue.add(K+i); // 3 4 5 6 7
-            }
+        for(int i = 1; i <= N; i++){ //반복문 7번
+            queue.add(i);
         }
 
         System.out.print("<");
-        System.out.print(queue.poll() + ", "); //3이 나옴
 
         while(!queue.isEmpty()){
             //3번 반복
             for(int i = 0; i <K-1; i++){
-                item = queue.poll();
-                queue.add(item);
+                queue.add(queue.poll());
             }
-            item = queue.poll();
 
-            if(queue.isEmpty()){
-                System.out.print(item + ">");
+            if(queue.size() == 1){
+                System.out.print(queue.poll() + ">");
             } else {
-                System.out.print(item + ", ");
+                System.out.print(queue.poll() + ", ");
             }
         }
     }
