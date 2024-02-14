@@ -18,11 +18,11 @@ public class Main1158 {
         Queue<Integer> queue = new LinkedList<>();
         int item = 0;
 
-        for(int i = K; i < N+K; i++){ //반복문 7번
-            if(i > N ){
-                queue.add(i%N);
+        for(int i = 0; i < N; i++){ //반복문 7번
+            if( K+i > N ){
+                queue.add(K+i-N);
             } else {
-                queue.add(i); // 3 4 5 6 7
+                queue.add(K+i); // 3 4 5 6 7
             }
         }
 
